@@ -1,8 +1,18 @@
+const setupDatabase = require('./lib/db')
+const setupAgentModel = require('./models/agent')
+const setupMetricModel = require('./models/metric')
 
-// TODO:  descriptive name
+// TODO:  function descriptive name
 module.exports = async function (config) {
-  const Agent = {}
-  const Metric = {}
+    const sequelize = setupDatabase(config);
+    const AgentModel = setupAgentModel(config);
+    const MetricModel = setupMetricModel(config);
+
+    AgentModel.hasMany(MetricModel);
+    MetricModel.BelongTo(AgentModel);
+  
+    const Agent = {}
+    const Metric = {}
 
   return {
     Agent,
